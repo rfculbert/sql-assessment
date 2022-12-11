@@ -27,7 +27,7 @@ module.exports = {
         INSERT INTO cities (name, rating, countryId)
         VALUES (
             '${name}', ${rating}, ${countryId}
-        );
+        )
         `).then((dbRes) => {
             res.status(200).send(dbRes[0])
          }).catch(error => console.log(error))
