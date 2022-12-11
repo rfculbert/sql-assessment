@@ -22,26 +22,29 @@ module.exports = {
     },
 
     createCity: (req, res) => {
-        const {name, rating, country_id} = req.body;
+        const {name, rating, countryId} = req.body;
         sequelize.query(`
-        name, rating, country_id
+        INSERT INTO cities (name, rating, countryId)
+        VALUES (
+            '${name}', ${rating}, ${countryId}
+        );
         `).then((dbRes) => {
             res.status(200).send(dbRes[0])
          }).catch(error => console.log(error))
-    },//step 5
-
-    getCities: (req, res) => {
-        sequelize.query(`
-            select a.cname, a.cities_id, a.rating
-            from cities
-            join countries
-            on city_id = country_id
-            order by desc;
-        `)
-        .then((dbRes) => {
-            res.status(200).send(dbRes[0])
-         }).catch(err => console.log(error))
     },
+
+    // getCities: (req, res) => {
+    //     sequelize.query(`
+    //         select cname, cities_id, rating
+    //         from cities
+    //         join countries
+    //         on city_id = country_id
+    //         order by desc;
+    //     `)
+    //     .then((dbRes) => {
+    //         res.status(200).send(dbRes[0])
+    //      }).catch(err => console.log(error))
+    // },
 
     deleteCity: ( req, res) => {
 
