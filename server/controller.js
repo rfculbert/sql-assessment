@@ -35,7 +35,7 @@ module.exports = {
 
     getCities: (req, res) => {
         sequelize.query(`
-            select cities.name as city, cities_id, rating, cities.country_id, countries.name as country
+            select cities.name as city, cities_id as city_id, rating, cities.country_id, countries.name as country
             from cities
             join countries
             on countries.country_id = cities.country_id
@@ -46,7 +46,15 @@ module.exports = {
     },
 
     deleteCity: ( req, res) => {
-
+        const {id} = req.params
+        sequelize.query(`
+        DELETE 
+        FROM cities
+        WHERE cities_id = ${id}
+        `)
+        .then((dbRes) => {
+            res.status(200).send(dbRes[0])
+         })
     },
 
     seed: (req, res) => {
